@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres
+    container_name: "postgres-1"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+    volumes:
+      - DB:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: greybeast@popos.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+    volumes:
+      - DB:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+volumes:
+  DB:
