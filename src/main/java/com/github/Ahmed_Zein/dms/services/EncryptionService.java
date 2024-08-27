@@ -1,4 +1,4 @@
-package com.github.Ahmed_Zein.dms.security;
+package com.github.Ahmed_Zein.dms.services;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
