@@ -1,6 +1,5 @@
 package com.github.Ahmed_Zein.dms.api.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
