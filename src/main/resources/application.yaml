@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: Document Management System
+  datasource:
+    username: postgres
+    password: password
+    url: "jdbc:postgresql://localhost:5432/dms"
+    jpa:
+      hibernate:
+        ddl-auto: update
+server:
+  servlet:
+    context-path: /api/v1
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+encryption:
+  salt:
+    rounds: 10
+jwt:
+  algorithm:
+    key: "greybeast declares this secure"
+  issuer: "greybeast"
+  expiryInSeconds: 86400 # 24hr
+app:
+  frontend-url: "localhost:3000"
