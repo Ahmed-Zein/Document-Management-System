@@ -16,8 +16,6 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: greybeast@popos.com
       PGADMIN_DEFAULT_PASSWORD: 123
-    volumes:
-      - DB:/var/lib/pgadmin
     ports:
       - "5050:80"
 volumes:
