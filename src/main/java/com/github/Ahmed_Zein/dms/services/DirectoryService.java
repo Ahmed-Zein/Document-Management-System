@@ -21,26 +21,17 @@ public class DirectoryService {
         this.localUserDAO = localUserDAO;
     }
 
+    public List<Directory> getDirectories(Long userId) throws UserNotFoundException {
+        var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
+        return directoryDAO.findByWorkSpace(user.getWorkSpace());
+    }
+
     public Directory addDirectory(Long userId, Directory directory) throws UserNotFoundException {
         directory.setId(0L);
         var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
         var userWorkSpace = user.getWorkSpace();
         directory.setWorkSpace(userWorkSpace);
         return directoryDAO.save(directory);
-    }
-
-    public void deleteDirectory(LocalUser user, Long dirId) throws DirectoryNotFoundException {
-        var userWorkSpace = user.getWorkSpace();
-        if (directoryDAO.existsByIdAndWorkSpace(dirId, userWorkSpace)) {
-            directoryDAO.deleteById(dirId);
-        } else {
-            throw new DirectoryNotFoundException();
-        }
-    }
-
-    public List<Directory> getDirectories(Long userId) throws UserNotFoundException {
-        var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
-        return directoryDAO.findByWorkSpace(user.getWorkSpace());
     }
 
     public Directory getDirectory(Long userId, Long dirId) throws DirectoryNotFoundException {
@@ -68,4 +59,12 @@ public class DirectoryService {
         return directoryDAO.save(directory);
     }
 
+    public void deleteDirectory(LocalUser user, Long dirId) throws DirectoryNotFoundException {
+        var userWorkSpace = user.getWorkSpace();
+        if (directoryDAO.existsByIdAndWorkSpace(dirId, userWorkSpace)) {
+            directoryDAO.deleteById(dirId);
+        } else {
+            throw new DirectoryNotFoundException();
+        }
+    }
 }

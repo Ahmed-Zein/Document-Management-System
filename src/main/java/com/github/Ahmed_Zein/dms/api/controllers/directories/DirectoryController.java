@@ -14,7 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,39 +29,45 @@ public class DirectoryController {
         this.permissionService = permissionService;
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Directory>> getDirectories(@AuthenticationPrincipal LocalUser user, @PathVariable Long userId) {
+    @GetMapping
+    public ResponseEntity<?> getDirectories(@AuthenticationPrincipal LocalUser user, @PathVariable Long userId) {
         if (permissionService.hasNoPermission(user, userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
             return ResponseEntity.ok(directoryService.getDirectories(userId));
         } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @GetMapping("/{dirId}")
-    public ResponseEntity<Directory> getDirectory(@AuthenticationPrincipal LocalUser user, @PathVariable Long userId, @PathVariable Long dirId) {
-        if (permissionService.hasNoPermission(user, userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        try {
-            return ResponseEntity.ok(directoryService.getDirectory(userId, dirId));
-        } catch (DirectoryNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Directory> addDirectory(@AuthenticationPrincipal LocalUser user, @RequestBody Directory directory, @PathVariable Long userId) {
+    public ResponseEntity<?> addDirectory(@AuthenticationPrincipal LocalUser user, @RequestBody Directory directory, @PathVariable Long userId) {
         if (permissionService.hasNoPermission(user, userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
             return ResponseEntity.ok(directoryService.addDirectory(userId, directory));
         } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().build();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @GetMapping("/{dirId}")
+    public ResponseEntity<?> getDirectory(@AuthenticationPrincipal LocalUser user, @PathVariable Long userId, @PathVariable Long dirId) {
+        if (permissionService.hasNoPermission(user, userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        try {
+            return ResponseEntity.ok(directoryService.getDirectory(userId, dirId));
+        } catch (DirectoryNotFoundException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Directory not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
