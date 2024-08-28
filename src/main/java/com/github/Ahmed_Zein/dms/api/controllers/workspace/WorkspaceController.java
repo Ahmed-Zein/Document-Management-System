@@ -1,9 +1,10 @@
 package com.github.Ahmed_Zein.dms.api.controllers.workspace;
 
 import com.github.Ahmed_Zein.dms.api.models.WorkspaceUpdate;
+import com.github.Ahmed_Zein.dms.exception.UserNotFoundException;
 import com.github.Ahmed_Zein.dms.models.LocalUser;
 import com.github.Ahmed_Zein.dms.services.PermissionService;
-import com.github.Ahmed_Zein.dms.services.WorkSpaceService;
+import com.github.Ahmed_Zein.dms.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users/{userId}/workspace")
 @SecurityRequirement(name = "Bearer Authentication")
 public class WorkspaceController {
-    private final WorkSpaceService workSpaceService;
     private final PermissionService permissionService;
+    private final UserService userService;
 
-    public WorkspaceController(WorkSpaceService workSpaceService, PermissionService permissionService) {
-        this.workSpaceService = workSpaceService;
+    public WorkspaceController(PermissionService permissionService, UserService userService) {
         this.permissionService = permissionService;
+        this.userService = userService;
     }
 
     @PatchMapping
@@ -27,16 +28,11 @@ public class WorkspaceController {
         if (permissionService.hasNoPermission(user, userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return null;
-//        try {
-////            return ResponseEntity.ok(workSpaceService.updateWorkSpace(userId, updatedName));
-//            return null;
-//        } catch (InvalidOperationException e) {
-//            var map = new HashMap<String, String>();
-//            map.put("message", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-//        }
-
+        try {
+            return ResponseEntity.ok(userService.updateWorkspaceName(userId, updatedName));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 //    TODO: delete workspace -> delete all directories
 
