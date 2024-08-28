@@ -50,7 +50,6 @@ public class LocalUser {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "work_space_id")
     private WorkSpace workSpace;

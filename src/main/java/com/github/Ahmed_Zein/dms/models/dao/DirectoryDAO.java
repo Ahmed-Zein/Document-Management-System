@@ -13,4 +13,6 @@ public interface DirectoryDAO extends ListCrudRepository<Directory, Long> {
     boolean existsByIdAndWorkSpace(Long id, WorkSpace workSpace);
 
     Optional<Directory> findByIdAndWorkSpace_LocalUser_Id(Long id, Long id1);
+
+    Optional<Directory> findByIdAndWorkSpace(Long id, WorkSpace workSpace);
 }
