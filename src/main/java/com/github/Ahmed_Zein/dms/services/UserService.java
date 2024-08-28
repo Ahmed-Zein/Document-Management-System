@@ -5,7 +5,6 @@ import com.github.Ahmed_Zein.dms.api.models.RegistrationBody;
 import com.github.Ahmed_Zein.dms.exception.EmailExistsException;
 import com.github.Ahmed_Zein.dms.models.LocalUser;
 import com.github.Ahmed_Zein.dms.models.UserRole;
-import com.github.Ahmed_Zein.dms.models.WorkSpace;
 import com.github.Ahmed_Zein.dms.models.dao.LocalUserDAO;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class UserService {
                 .lastName(body.getLastname())
                 .password(encryptionService.hashPassword(body.getPassword()))
                 .role(UserRole.USER)
-                .workSpace(WorkSpace.builder().name(WORKSPACE_DEFAULT_NAME).build());
+                .workspaceName(WORKSPACE_DEFAULT_NAME);
 
         return localUserDAO.save(user.build());
     }

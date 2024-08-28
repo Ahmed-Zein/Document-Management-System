@@ -30,14 +30,15 @@ public class DocumentService {
     }
 
     public Document storeDocument(MultipartFile multipartFile, Long userId, Long dirId) throws UserNotFoundException, DirectoryNotFoundException, IOException {
-        var owner = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
-        var directory = directoryDAO.findByIdAndWorkSpace(dirId, owner.getWorkSpace()).orElseThrow(DirectoryNotFoundException::new);
-        var file = storageService.store(multipartFile);
-        var document = Document.builder()
-                .name(multipartFile.getOriginalFilename())
-                .url(file.getPath())
-                .directory(directory)
-                .build();
-        return documentDAO.save(document);
+//        var owner = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
+//        var directory = directoryDAO.findByIdAndWorkSpace(dirId, owner.()).orElseThrow(DirectoryNotFoundException::new);
+//        var file = storageService.store(multipartFile);
+//        var document = Document.builder()
+//                .name(multipartFile.getOriginalFilename())
+//                .url(file.getPath())
+//                .directory(directory)
+//                .build();
+//        return documentDAO.save(document);
+        return null;
     }
 }

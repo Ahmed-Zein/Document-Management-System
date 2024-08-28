@@ -30,13 +30,13 @@ public class Directory {
     @Column(name = "private_dir", nullable = false)
     private Boolean privateDir = false;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "work_space_id")
-    private WorkSpace workSpace;
 
     @JsonIgnore
     @OneToMany(mappedBy = "directory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private LocalUser localUser;
 
 }

@@ -1,7 +1,6 @@
 package com.github.Ahmed_Zein.dms.api.controllers.workspace;
 
 import com.github.Ahmed_Zein.dms.api.models.WorkspaceUpdate;
-import com.github.Ahmed_Zein.dms.exception.InvalidOperationException;
 import com.github.Ahmed_Zein.dms.models.LocalUser;
 import com.github.Ahmed_Zein.dms.services.PermissionService;
 import com.github.Ahmed_Zein.dms.services.WorkSpaceService;
@@ -10,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/users/{userId}/workspace")
@@ -30,13 +27,15 @@ public class WorkspaceController {
         if (permissionService.hasNoPermission(user, userId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        try {
-            return ResponseEntity.ok(workSpaceService.updateWorkSpace(userId, updatedName));
-        } catch (InvalidOperationException e) {
-            var map = new HashMap<String, String>();
-            map.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-        }
+        return null;
+//        try {
+////            return ResponseEntity.ok(workSpaceService.updateWorkSpace(userId, updatedName));
+//            return null;
+//        } catch (InvalidOperationException e) {
+//            var map = new HashMap<String, String>();
+//            map.put("message", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+//        }
 
     }
 //    TODO: delete workspace -> delete all directories

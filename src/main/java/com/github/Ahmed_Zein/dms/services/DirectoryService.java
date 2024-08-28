@@ -23,48 +23,53 @@ public class DirectoryService {
 
     public List<Directory> getDirectories(Long userId) throws UserNotFoundException {
         var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
-        return directoryDAO.findByWorkSpace(user.getWorkSpace());
+//        return directoryDAO.findByWorkSpace(user.getWorkSpace());
+        return null;
     }
 
     public Directory addDirectory(Long userId, Directory directory) throws UserNotFoundException {
-        directory.setId(0L);
-        var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
-        var userWorkSpace = user.getWorkSpace();
-        directory.setWorkSpace(userWorkSpace);
-        return directoryDAO.save(directory);
+        return null;
+//        directory.setId(0L);
+//        var user = localUserDAO.findById(userId).orElseThrow(UserNotFoundException::new);
+//        var userWorkSpace = user.getWorkSpace();
+//        directory.setWorkSpace(userWorkSpace);
+//        return directoryDAO.save(directory);
     }
 
     public Directory getDirectory(Long userId, Long dirId) throws DirectoryNotFoundException {
-        return directoryDAO.findByIdAndWorkSpace_LocalUser_Id(dirId, userId).orElseThrow(DirectoryNotFoundException::new);
+        return null;
+//        return directoryDAO.findByIdAndWorkSpace_LocalUser_Id(dirId, userId).orElseThrow(DirectoryNotFoundException::new);
     }
 
     public Directory updateDirectory(Long userId, Long dirId, Directory directory)
             throws UserNotFoundException, DirectoryNotFoundException, InvalidOperationException {
 
-        var user = localUserDAO.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found for ID: " + userId));
-
-        if (directory == null || !dirId.equals(directory.getId())) {
-            throw new InvalidOperationException("Directory ID mismatch or directory is null.");
-        }
-
-        Directory originalDir = directoryDAO.findById(dirId)
-                .orElseThrow(() -> new DirectoryNotFoundException("Directory not found for ID: " + dirId));
-
-        if (!user.getWorkSpace().equals(originalDir.getWorkSpace())) {
-            throw new InvalidOperationException("User does not have permission to update this directory.");
-        }
-
-        directory.setWorkSpace(originalDir.getWorkSpace());
-        return directoryDAO.save(directory);
+        return null;
+//        var user = localUserDAO.findById(userId)
+//                .orElseThrow(() -> new UserNotFoundException("User not found for ID: " + userId));
+//
+//        if (directory == null || !dirId.equals(directory.getId())) {
+//            throw new InvalidOperationException("Directory ID mismatch or directory is null.");
+//        }
+//
+//        Directory originalDir = directoryDAO.findById(dirId)
+//                .orElseThrow(() -> new DirectoryNotFoundException("Directory not found for ID: " + dirId));
+//
+//        if (!user.getWorkSpace().equals(originalDir.getWorkSpace())) {
+//            throw new InvalidOperationException("User does not have permission to update this directory.");
+//        }
+//
+//        directory.setWorkSpace(originalDir.getWorkSpace());
+//        return directoryDAO.save(directory);
     }
 
     public void deleteDirectory(LocalUser user, Long dirId) throws DirectoryNotFoundException {
-        var userWorkSpace = user.getWorkSpace();
-        if (directoryDAO.existsByIdAndWorkSpace(dirId, userWorkSpace)) {
-            directoryDAO.deleteById(dirId);
-        } else {
-            throw new DirectoryNotFoundException();
-        }
+//        return null;
+//        var userWorkSpace = user.getWorkSpace();
+//        if (directoryDAO.existsByIdAndWorkSpace(dirId, userWorkSpace)) {
+//            directoryDAO.deleteById(dirId);
+//        } else {
+//            throw new DirectoryNotFoundException();
+//        }
     }
 }

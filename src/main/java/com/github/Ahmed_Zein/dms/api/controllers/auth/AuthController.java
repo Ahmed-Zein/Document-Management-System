@@ -25,7 +25,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<LocalUser> register(@RequestBody RegistrationBody body) {
-
         try {
             return ResponseEntity.ok(userService.register(body));
         } catch (EmailExistsException e) {
