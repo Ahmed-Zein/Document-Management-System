@@ -1,0 +1,40 @@
+version: '3.8'  # Specify Docker Compose file version
+
+services:
+  app:
+    build:
+      context: .
+    container_name: "spring-boot"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/dms  # Use 'postgres' to refer to the database service
+      - SPRING_DATASOURCE_USERNAME=postgres  # Set the username for the datasource
+      - SPRING_DATASOURCE_PASSWORD=password  # Set the password for the datasource
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update  # Other Spring-specific settings
+
+  postgres:
+    image: postgres
+    container_name: "postgres-1"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: dms
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - DB:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg-admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: greybeast@popos.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+    ports:
+      - "5050:80"
+
+volumes:
+  DB:
