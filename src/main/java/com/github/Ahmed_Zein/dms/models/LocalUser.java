@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "local_user")
@@ -41,6 +40,7 @@ public class LocalUser {
     @Column(name = "workspace_name", nullable = false)
     private String workspaceName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "localUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Directory> directories = new ArrayList<>();
 
