@@ -38,7 +38,7 @@ public class WorkspaceControllerTest {
         String token = jwtService.generateToken(user);
         String newName = "new_workspace";
         var workspaceupdate = WorkspaceUpdate.builder().name(newName).build();
-        ResultActions result = mvc.perform(patch("/users/1/workspace")
+        ResultActions result = mvc.perform(patch("/v1/users/1/workspace")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(workspaceupdate))
                         .header("Authorization", "Bearer " + token))
@@ -56,7 +56,7 @@ public class WorkspaceControllerTest {
         String token = jwtService.generateToken(user);
         String newName = "new_workspace";
         var workspaceupdate = WorkspaceUpdate.builder().name(newName).build();
-        ResultActions result = mvc.perform(patch("/users/99/workspace")
+        ResultActions result = mvc.perform(patch("/v1/users/99/workspace")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(workspaceupdate))
                         .header("Authorization", "Bearer " + token))
@@ -70,7 +70,7 @@ public class WorkspaceControllerTest {
         String token = jwtService.generateToken(user);
         String newName = "new_workspace";
         var workspaceupdate = WorkspaceUpdate.builder().name(newName).build();
-        ResultActions result = mvc.perform(patch("/users/99/workspace")
+        ResultActions result = mvc.perform(patch("/v1/users/99/workspace")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(workspaceupdate))
                         .header("Authorization", "Bearer " + token))

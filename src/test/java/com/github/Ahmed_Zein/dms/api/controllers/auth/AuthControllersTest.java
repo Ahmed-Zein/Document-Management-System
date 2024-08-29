@@ -34,13 +34,13 @@ public class AuthControllersTest {
                 .lastname("LAST_NAME")
                 .password("password123")
                 .build();
-        mockMvc.perform(post("/auth/register")
+        mockMvc.perform(post("/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(registrationBody)))
                 .andExpect(status().isConflict());
 
         registrationBody.setEmail("testZ@test.com");
-        mockMvc.perform(post("/auth/register")
+        mockMvc.perform(post("/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(registrationBody)))
                 .andExpect(status().isOk());
@@ -52,18 +52,18 @@ public class AuthControllersTest {
                 .email("unvalidEmail@test.com")
                 .password("WRONG_PASSWORD")
                 .build();
-        mockMvc.perform(post("/auth/login")
+        mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
                 .andExpect(status().isNotFound());
 
         body.setEmail("testa@test.com");
-        mockMvc.perform(post("/auth/login")
+        mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
                 .andExpect(status().isBadRequest());
         body.setPassword("passwordA123");
-        ResultActions result = mockMvc.perform(post("/auth/login")
+        ResultActions result = mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
                 .andExpect(status().isOk());

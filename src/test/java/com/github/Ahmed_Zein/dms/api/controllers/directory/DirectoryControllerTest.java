@@ -48,7 +48,7 @@ public class DirectoryControllerTest {
     @Test
     public void getDirectories_ADMIN_Success() throws Exception {
         var token = generateToken(2L);
-        ResultActions resultActions = mvc.perform(get("/users/1/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isOk());
+        ResultActions resultActions = mvc.perform(get("/v1/users/1/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isOk());
 
         resultActions.andExpect(result -> {
             String json = result.getResponse().getContentAsString();
@@ -63,7 +63,7 @@ public class DirectoryControllerTest {
     @Test
     public void getDirectories_Success() throws Exception {
         var token = generateToken(1L);
-        ResultActions resultActions = mvc.perform(get("/users/1/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isOk());
+        ResultActions resultActions = mvc.perform(get("/v1/users/1/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isOk());
 
         resultActions.andExpect(result -> {
             String json = result.getResponse().getContentAsString();
@@ -78,13 +78,13 @@ public class DirectoryControllerTest {
     @Test
     public void getDirectories_Forbidden() throws Exception {
         var token = generateToken(1L);
-        ResultActions result = mvc.perform(get("/users/99/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
+        ResultActions result = mvc.perform(get("/v1/users/99/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isForbidden());
     }
 
     @Test
     public void getDirectories_NotFound() throws Exception {
         var token = generateToken(2L);
-        ResultActions result = mvc.perform(get("/users/99/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isNotFound());
+        ResultActions result = mvc.perform(get("/v1/users/99/workspace/directories").header("Authorization", "Bearer " + token)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class DirectoryControllerTest {
                 .isPublic(false)
                 .build();
 
-        ResultActions resultActions = mvc.perform(post("/users/1/workspace/directories")
+        ResultActions resultActions = mvc.perform(post("/v1/users/1/workspace/directories")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
@@ -120,7 +120,7 @@ public class DirectoryControllerTest {
                 .isPublic(false)
                 .build();
 
-        ResultActions resultActions = mvc.perform(post("/users/1/workspace/directories")
+        ResultActions resultActions = mvc.perform(post("/v1/users/1/workspace/directories")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
@@ -144,7 +144,7 @@ public class DirectoryControllerTest {
                 .isPublic(false)
                 .build();
 
-        ResultActions resultActions = mvc.perform(post("/users/3/workspace/directories")
+        ResultActions resultActions = mvc.perform(post("/v1/users/3/workspace/directories")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
@@ -157,7 +157,7 @@ public class DirectoryControllerTest {
     public void getDirectoryTest_SUCESS() throws Exception {
         var token = generateToken(1L);
 
-        ResultActions resultActions = mvc.perform(get("/users/1/workspace/directories/1")
+        ResultActions resultActions = mvc.perform(get("/v1/users/1/workspace/directories/1")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
 
@@ -174,7 +174,7 @@ public class DirectoryControllerTest {
     public void getDirectoryTest_NOTFOUND() throws Exception {
         var token = generateToken(1L);
 
-        mvc.perform(get("/users/1/workspace/directories/99")
+        mvc.perform(get("/v1/users/1/workspace/directories/99")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
@@ -184,7 +184,7 @@ public class DirectoryControllerTest {
     public void deleteDirectoryTest_SUCESS() throws Exception {
         var token = generateToken(1L);
 
-        ResultActions resultActions = mvc.perform(delete("/users/1/workspace/directories/1")
+        ResultActions resultActions = mvc.perform(delete("/v1/users/1/workspace/directories/1")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
@@ -194,7 +194,7 @@ public class DirectoryControllerTest {
     public void deleteDirectoryTest_ADMIN_SUCESS() throws Exception {
         var token = generateToken(2L);
 
-        ResultActions resultActions = mvc.perform(delete("/users/1/workspace/directories/1")
+        ResultActions resultActions = mvc.perform(delete("/v1/users/1/workspace/directories/1")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
@@ -204,7 +204,7 @@ public class DirectoryControllerTest {
     public void deleteDirectoryTest_ADMIN_NOTFOUND() throws Exception {
         var token = generateToken(2L);
 
-        ResultActions resultActions = mvc.perform(delete("/users/1/workspace/directories/99")
+        ResultActions resultActions = mvc.perform(delete("/v1/users/1/workspace/directories/99")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
@@ -217,8 +217,7 @@ public class DirectoryControllerTest {
         var body = AddDirectoryBody.builder()
                 .name("FOLDER_99")
                 .build();
-        System.out.println(body);
-        ResultActions resultActions = mvc.perform(patch("/users/1/workspace/directories/1")
+        ResultActions resultActions = mvc.perform(patch("/v1/users/1/workspace/directories/1")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
@@ -241,7 +240,7 @@ public class DirectoryControllerTest {
                 .isPublic(false)
                 .build();
 
-        ResultActions resultActions = mvc.perform(patch("/users/3/workspace/directories/99")
+        ResultActions resultActions = mvc.perform(patch("/v1/users/3/workspace/directories/99")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(body)))
