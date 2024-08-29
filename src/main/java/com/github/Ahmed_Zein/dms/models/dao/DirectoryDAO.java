@@ -13,4 +13,6 @@ public interface DirectoryDAO extends ListCrudRepository<Directory, Long> {
     Optional<Directory> findByIdAndLocalUser_Id(Long id, Long id1);
 
     long deleteByIdAndLocalUser(Long id, LocalUser localUser);
+
+    boolean existsByName(String name);
 }

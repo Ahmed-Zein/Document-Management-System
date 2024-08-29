@@ -6,21 +6,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 @Service
-public class FileSystemStorageService implements StorageService {
+public class FileSystemStorageService {
     String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
 
-    @Override
-    public File store(MultipartFile multipartFile) throws IOException {
+    public void store(MultipartFile multipartFile, String parentPath) throws IOException {
         if (multipartFile.isEmpty()) {
             throw new StorageException("FILE_IS_EMPTY");
         }
         if (multipartFile.getOriginalFilename() == null) {
             throw new StorageException("FILE_NAME_IS_MISSING");
         }
-        File directory = new File(UPLOAD_DIR);
+        File directory = new File(UPLOAD_DIR + parentPath);
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
                 throw new StorageException("SERVER_ERR");
@@ -28,11 +26,6 @@ public class FileSystemStorageService implements StorageService {
         }
         File destinationFile = new File(directory, multipartFile.getOriginalFilename());
         multipartFile.transferTo(destinationFile);
-        return destinationFile;
     }
 
-    @Override
-    public Path load(String filename) {
-        return null;
-    }
 }

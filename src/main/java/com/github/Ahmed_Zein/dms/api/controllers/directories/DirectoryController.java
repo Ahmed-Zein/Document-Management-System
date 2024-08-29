@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users/{userId}/workspace/directories")
+@RequestMapping("/v1/users/{userId}/workspace/directories")
 @SecurityRequirement(name = "Bearer Authentication")
 public class DirectoryController {
 

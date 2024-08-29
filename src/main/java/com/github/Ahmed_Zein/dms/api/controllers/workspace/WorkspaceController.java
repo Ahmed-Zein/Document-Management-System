@@ -12,7 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users/{userId}/workspace")
+@RequestMapping("/v1/users/{userId}/workspace")
 @SecurityRequirement(name = "Bearer Authentication")
 public class WorkspaceController {
     private final PermissionService permissionService;

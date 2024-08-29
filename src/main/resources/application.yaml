@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
 server:
   servlet:
-    context-path: /api/v1
+    context-path: /api
 management:
   endpoints:
     jmx:
