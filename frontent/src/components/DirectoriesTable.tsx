@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Key } from "react";
 import { FaLock, FaLockOpen } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +5,12 @@ import { toggleVisibility } from "../services/directory.service";
 import { Directory } from "../types/directory";
 import FolderIcon from "./FolderIcon";
 
-interface TableComponentPropst {
+interface TableComponentProps {
   data: Directory[];
   toggelVisibility: (directory: Directory) => void;
 }
 
-const TableComponent: React.FC<TableComponentPropst> = ({ data }) => {
+const DirectoriesTable: React.FC<TableComponentProps> = ({ data }) => {
   const navigate = useNavigate();
   const headers = ["Name", "Created at", "Owner", "Public"];
   const IToggelVisiblity = async (dir: Directory) => {
@@ -19,19 +18,7 @@ const TableComponent: React.FC<TableComponentPropst> = ({ data }) => {
   };
 
   const onClickHandler = async (id: Number) => {
-    try {
-      await axios.get(
-        `http://localhost:8080/api/v1/users/1/workspace/directories/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      navigate("/documents");
-    } catch (e) {
-      console.log(e);
-    }
+    navigate(`/directories/${id}/documents`);
   };
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -93,4 +80,4 @@ const TableComponent: React.FC<TableComponentPropst> = ({ data }) => {
   );
 };
 
-export default TableComponent;
+export default DirectoriesTable;

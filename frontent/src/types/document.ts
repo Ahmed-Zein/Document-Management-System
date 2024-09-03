@@ -1,6 +1,7 @@
-export interface Document {
+export interface IDocument {
   id: number;
   name: string;
-  createAt: string;
-  url: String;
+  createdAt: string;
+  url: string;
+  contentType: string;
 }

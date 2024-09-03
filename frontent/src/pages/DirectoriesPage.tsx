@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
-import Modal from "../components/Modal";
-import TableComponent from "../components/TableComponent";
+import Modal from "../components/modal/Modal";
+import DirectoriesTable from "../components/DirectoriesTable";
 import { Directory } from "../types/directory";
+import { deleteDirectory } from "../services/directory.service";
 
 interface HomePageProps {
   fetchDirectories: (dirId: Number) => Promise<Directory[]>;
@@ -10,12 +11,16 @@ interface HomePageProps {
   toggleVisibility: (directory: Directory) => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({
+const DirectoriesPage: React.FC<HomePageProps> = ({
   fetchDirectories,
   addNewDirectory,
   toggleVisibility,
 }) => {
+  const [isPublic, setIsPublic] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState<Directory[]>([]);
+  const [directoryName, setDirectoryName] = useState("");
+
   const addDir = async (name: string, isPublic: boolean) => {
     try {
       await addNewDirectory(name, isPublic);
@@ -26,11 +31,7 @@ const HomePage: React.FC<HomePageProps> = ({
     }
   };
 
-  const [data, setData] = useState<Directory[]>([]);
-  const [directoryName, setDirectoryName] = useState(""); // State for directory name
-  const [isPublic, setIsPublic] = useState(false); // State for public checkbox
-
-  const fetchData = async () => {
+  const loadDirectories = async () => {
     try {
       const directories = await fetchDirectories(1);
       setData(directories);
@@ -44,7 +45,7 @@ const HomePage: React.FC<HomePageProps> = ({
   };
 
   useEffect(() => {
-    fetchData();
+    loadDirectories();
   }, []);
 
   return (
@@ -113,12 +114,15 @@ const HomePage: React.FC<HomePageProps> = ({
           </button>
           <hr className="mt-4"></hr>
         </div>
+        <button onClick={() => deleteDirectory(1, Number(data[0].id))}>
+          TEST
+        </button>
         <div className=" basis-5/6 rounded-lg border-gray-200 border-2 bg-white p-1">
-          <TableComponent data={data} toggelVisibility={toggleVisibility} />
+          <DirectoriesTable data={data} toggelVisibility={toggleVisibility} />
         </div>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default DirectoriesPage;
